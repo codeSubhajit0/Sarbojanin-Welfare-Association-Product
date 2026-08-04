@@ -1,0 +1,14 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // All reads and writes to blogPosts/activities go through this app's
+    // server-side API routes (app/api/blog, app/api/activities), which use
+    // the Firebase Admin SDK — that SDK bypasses these rules entirely, since
+    // it authenticates with a service account, not a client Firebase Auth
+    // user. There is no legitimate reason for a browser to talk to
+    // Firestore directly in this app, so client access is fully denied.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

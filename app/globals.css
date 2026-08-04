@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background-color: #fbf5ec;
+  color: #241c14;
+}
+
+.section-eyebrow {
+  @apply inline-flex items-center gap-3 text-maroon text-xs font-semibold tracking-[0.2em] uppercase;
+}
+
+.section-eyebrow::before,
+.section-eyebrow::after {
+  content: "";
+  display: inline-block;
+  width: 22px;
+  height: 1px;
+  background: #c9972f;
+}
+
+.btn-primary {
+  @apply inline-flex items-center gap-2 bg-maroon hover:bg-maroon-dark text-white font-medium px-6 py-3 rounded-full transition-colors duration-200;
+}
+
+.btn-outline {
+  @apply inline-flex items-center gap-2 border border-maroon text-maroon hover:bg-maroon hover:text-white font-medium px-6 py-3 rounded-full transition-colors duration-200;
+}
+
+.btn-outline-light {
+  @apply inline-flex items-center gap-2 border border-white/40 text-white hover:bg-white/10 font-medium px-6 py-3 rounded-full transition-colors duration-200;
+}

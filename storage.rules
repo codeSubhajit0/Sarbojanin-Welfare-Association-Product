@@ -1,0 +1,29 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Blog featured images and activity gallery images: publicly readable
+    // (they're displayed on public pages), but only the signed-in admin
+    // (checked via the `admin` custom claim set by scripts/create-admin.js)
+    // can upload — and only images under 5MB.
+    match /blog/{fileName} {
+      allow read: if true;
+      allow write: if request.auth != null
+                    && request.auth.token.admin == true
+                    && request.resource.size < 5 * 1024 * 1024
+                    && request.resource.contentType.matches('image/.*');
+    }
+
+    match /activities/{fileName} {
+      allow read: if true;
+      allow write: if request.auth != null
+                    && request.auth.token.admin == true
+                    && request.resource.size < 5 * 1024 * 1024
+                    && request.resource.contentType.matches('image/.*');
+    }
+
+    // Deny everything else by default.
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}
