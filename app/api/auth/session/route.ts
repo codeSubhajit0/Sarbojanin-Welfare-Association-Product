@@ -25,12 +25,12 @@ export async function POST(req: NextRequest) {
     const decoded = await adminAuth().verifyIdToken(idToken);
 
     console.log(decoded);
-    // if (!decoded.admin) {
-    //   return NextResponse.json(
-    //     { error: "This account is not authorized for admin access." },
-    //     { status: 403 }
-    //   );
-    // }
+    if (!decoded.admin) {
+      return NextResponse.json(
+        { error: "This account is not authorized for admin access." },
+        { status: 403 }
+      );
+    }
     console.log("Running");
 
     const sessionCookie = await adminAuth().createSessionCookie(idToken, {
