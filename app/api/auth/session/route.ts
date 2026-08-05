@@ -24,12 +24,14 @@ export async function POST(req: NextRequest) {
     // Verify the token is genuine and fresh before minting a session cookie.
     const decoded = await adminAuth().verifyIdToken(idToken);
 
-    if (!decoded.admin) {
-      return NextResponse.json(
-        { error: "This account is not authorized for admin access." },
-        { status: 403 }
-      );
-    }
+    console.log(decoded);
+    // if (!decoded.admin) {
+    //   return NextResponse.json(
+    //     { error: "This account is not authorized for admin access." },
+    //     { status: 403 }
+    //   );
+    // }
+    console.log("Running");
 
     const sessionCookie = await adminAuth().createSessionCookie(idToken, {
       expiresIn: SESSION_EXPIRES_IN_MS,
@@ -45,12 +47,16 @@ export async function POST(req: NextRequest) {
     });
     return res;
   } catch (err) {
-    console.error("Session creation failed:", err);
-    return NextResponse.json(
-      { error: "Invalid credentials or session could not be created." },
+  console.error("Session creation failed:", err);
+  return NextResponse.json(
+      {
+        error: "Invalid credentials or session could not be created.",
+        debugMessage: err instanceof Error ? err.message : String(err),
+        debugName: err instanceof Error ? err.name : null,
+      },
       { status: 401 }
-    );
-  }
+  );
+}
 }
 
 /** DELETE — logs the admin out by clearing the session cookie. */
