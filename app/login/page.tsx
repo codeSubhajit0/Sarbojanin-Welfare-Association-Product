@@ -24,6 +24,7 @@ function LoginForm() {
     setLoading(true);
 
     try {
+
       // 1. Sign in with Firebase Auth directly from the browser. This also
       //    persists the client-side auth session, which the create-blog /
       //    create-activity pages need later for authenticated Storage uploads.
@@ -56,6 +57,7 @@ function LoginForm() {
       }
     } finally {
       setLoading(false);
+      console.log("Signing in with email:", email);
     }
   };
 
